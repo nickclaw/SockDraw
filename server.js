@@ -10,7 +10,6 @@ app.use('/', express.static(__dirname + '/static'));
 
 var comm = io.sockets.on('connection', function(socket) {
 	console.log('user ' + socket.id + ' connected...');
-	console.log(comm);
 
 	// send initial data
 	socket.emit('updatestate', {
@@ -19,8 +18,13 @@ var comm = io.sockets.on('connection', function(socket) {
 		peers : getPeerIds(socket)
 	});
 
+	socket.broadcast.emit('newuser', {
+		id : socket.id
+	})
+
 	// forward messages
 	socket.on('message', function(data) {
+		console.log(data);
 		if (data.to) {
 
 		} else {
