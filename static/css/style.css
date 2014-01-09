@@ -11,13 +11,44 @@ html, body {
 	overflow: hidden;
 }
 
+#ui {
+	z-index: 10;
+	pointer-events: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 #title {
 	position: fixed;
 	bottom: 10px;
 	right: 10px;
 	font-size: 20pt;
-	font-family: sans-serif;
-	-webkit-user-select: none;
-	user-select: none;
-	cursor: default;
+	font-family: Arial;
+	text-shadow: 0px 0px 10px white;
+}
+
+#hotkeys {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+}
+
+.hotkey {
+	border: solid 1px rgb(200,200,200);
+	border-radius: 5px;
+	width: 40px;
+	height: 40px;
+	opacity: .7;
+	background-color: rgb(230,230,230);
+	display: inline-block;
+	margin: 10px;
+
+	font-size: 20pt;
+	font-family: Arial;
+	line-height: 40px;
+	text-align: center;
+}
+
+.hotkey:hover {
+	background-color: blue;
 }

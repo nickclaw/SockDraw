@@ -1,121 +1,62 @@
 ;$(function() {
-	$(window).on('resize load', sizeCanvas);	
+	var socket = io.connect('/')
+		drawPanel = SockDraw.createCanvas(dispatchPoint),
+		global = null,
+		user = null;
 
-	// create sockets
-	var socket = io.connect('http://localhost:8888')
-		id = null,
-		peers = {},
-		canvas = document.getElementById('draw'),
-		ctx = canvas.getContext('2d'),
-		user = newUser(socket.id, ctx),
-		isDrawing = false
-		isConnected = false;
+	$('#hotkeys')
+		.append(
+			SockDraw.createHotkeyButton('B', 'change brush', function(evt) {
+				console.log('brush');
+			}),
+			SockDraw.createHotkeyButton('C', 'change color', function(evt) {
+				console.log('color');
+			}),
+			SockDraw.createHotkeyButton('H', 'change size', function(evt) {
+				console.log('hide');
+			}),
+			SockDraw.createHotkeyButton('S', 'change size', function(evt) {
+				console.log('size');
+			})
+
+		)
 
 	socket.on('updatestate', function(data) {
-		// save data
-		id = data.you;		
-		$.each(data.peers, function(index, id) {
-			peers[id] = newUser(id, ctx)
-		});
-		isConnected = true;
-	});
+		console.log('updatestate', data);
 
+		global = data.room;
+		user = drawPanel.users.create(data.you);
+		drawPanel.users.setLocal(user);
+
+		$.each(data.peers, function(index, id) {
+			drawPanel.users.create(id);
+		});
+
+		applyListeners(socket);
+	});	
+
+	function dispatchPoint(point) {
+		socket.emit('message', {
+			to : null,
+			from : user.getId(),
+			points : [point]
+		});
+	}
+});
+
+function applyListeners(socket) {
 	socket.on('newuser', function(data) {
-		peers[data.id] = newUser(data.id, ctx);
+		console.log('newuser', data);
+
+		drawPanel.users.create(data.id);
 	});
 
 	socket.on('message', function(data) {
-		console.log(peers, data.from);
-		var peer = peers[data.from]
-		if (peer && isConnected) {
-			for (var i = 0; i < data.points.length; i++) {
-				peer.drawPoint(data.points[i]);
-			}
+		console.log('message', data);
+
+		var sender = drawPanel.users.get(data.from);
+		if (sender) {
+			sender.drawPoints(data.points);
 		}
 	});
-
-	$("#draw")
-		.on('mousedown', function(evt) {
-			isDrawing = isConnected && true;
-
-			if (isDrawing) {
-				var point = Point.createPoint(evt.clientX, evt.clientY, 'start');
-
-				user.drawPoint(point);
-
-				socket.emit('message', {
-					from : id,
-					to : null,
-					points : [point]
-				});
-			}
-		})
-		.on('mousemove', function(evt) {
-			if (isDrawing && isConnected) {
-				var point = Point.createPoint(evt.clientX, evt.clientY, 'point');
-
-				user.drawPoint(point);
-
-				socket.emit('message', {
-					from : id,
-					to : null,
-					points : [point]
-				});
-			}
-		})
-		.on('mouseup', function(evt) {
-			isDrawing = false;
-		});
-});
-
-function setup() {
-
-}
-
-function sizeCanvas() {
-	$('#draw')
-		.attr('width', window.innerWidth)
-		.attr('height', window.innerHeight);
-}
-
-function newUser(id, context) {
-	var points = [],
-		lastPoint = null,
-		ctx = context,
-		img = new Image();
-
-	img.src = 'http://www.tricedesigns.com/wp-content/uploads/2012/01/brush2.png';
-
-	return {
-		drawPoint : function(point) {
-			if (lastPoint && point.type === 'point') {
-
-				var dist = Point.distance(lastPoint, point),
-					angle = Point.angle(lastPoint, point);
-
-				for (var i = 0; i < dist; i+=1) {
-
-					ctx.drawImage(
-							img,
-							lastPoint.x + (Math.sin(angle) * i) - 25,
-							lastPoint.y + (Math.cos(angle) * i) - 25
-						);
-				}
-			}
-			lastPoint = point;
-			points.push(point);
-		},
-
-		exportPoints : function() {
-			return points;
-		},
-
-		importPoints : function(points) {
-			var self = this;
-			$.each(points, function(index, point) {
-				self.draw(point);
-			});
-		}
-	}
-
 }
