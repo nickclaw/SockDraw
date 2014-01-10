@@ -1,10 +1,5 @@
 (function() {
-	var app = {};
-	if (this.SockDraw) {
-		app = this.SockDraw;
-	} else {
-		this.SockDraw = app;
-	}
+	var app = this.SockDraw = this.SockDraw || {};
 
 	app.createHotkeyButton = function(letter, code, description, fn) {
 		var element = $('<div>');

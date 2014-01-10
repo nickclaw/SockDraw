@@ -1,11 +1,6 @@
 (function() {
-	var app = {};
-	if (this.SockDraw) {
-		app = this.SockDraw;
-	} else {
-		this.SockDraw = app;
-	}
-
+	var app = this.SockDraw = this.SockDraw || {};
+	
 	var	canvas = document.createElement('canvas')
 		brushElement = $('<div>')
 		ctx = canvas.getContext('2d'),

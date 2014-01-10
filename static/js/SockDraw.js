@@ -1,10 +1,5 @@
 (function() {
-	var app = {};
-	if (this.SockDraw) {
-		app = this.SockDraw;
-	} else {
-		this.SockDraw = app;
-	}
+	var app = this.SockDraw = this.SockDraw || {};
 
 	app.init = function() {
 		// create socket
@@ -109,13 +104,13 @@
 			app.createHotkeyButton('-', 189, 'decrease size', function() {
 				var currentBrush = app.user.brush();
 				var brush = app.util.updateUsersBrush(app.user, {
-					scale : currentBrush.options.scale - 20
+					scale : currentBrush.options.scale - 10
 				});
 			}),
 			app.createHotkeyButton('=', 187, 'increase size', function() {
 				var currentBrush = app.user.brush();
 				var brush = app.util.updateUsersBrush(app.user, {
-					scale : currentBrush.options.scale + 20
+					scale : currentBrush.options.scale + 10
 				});
 			}),
 			app.createHotkeyButton('[', 219, 'increase size', function() {
