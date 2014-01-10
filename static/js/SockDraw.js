@@ -53,6 +53,14 @@
 		updateUsersBrush : function(user, options) {
 			var newBrush = app.brushes.update(user.brush(), options);
 			user.brush(newBrush);
+
+			// if use is local broadcast the change
+			if (user.isLocal()) {
+				app.util.sendMessage('newbrush', {
+					brush_settings : newBrush.options
+				});
+			}
+
 			return newBrush;
 		}
 	}
@@ -87,20 +95,40 @@
 		app.drawer.init();
 
 		$('#hotkeys').append(
-			app.createHotkeyButton('C', 'change color', function() {
+			app.createHotkeyButton('H', 72, 'hide ui', function() {
+				console.log('hiding ui');
+				$('#ui').toggle();
+			}),
+			app.createHotkeyButton('c', 67, 'change color', function() {
 				app.components.color(function(color) {
 					var brush = app.util.updateUsersBrush(app.user, {
 						color : color
 					});
-
-					app.util.sendMessage('newbrush', {
-						brush_settings : brush.options,
-					});
 				});
 			}),
-			app.createHotkeyButton('H', 'hide ui', function() {
-				console.log('hiding ui');
-				$('#ui').toggle();
+			app.createHotkeyButton('-', 189, 'decrease size', function() {
+				var currentBrush = app.user.brush();
+				var brush = app.util.updateUsersBrush(app.user, {
+					scale : currentBrush.options.scale - 20
+				});
+			}),
+			app.createHotkeyButton('=', 187, 'increase size', function() {
+				var currentBrush = app.user.brush();
+				var brush = app.util.updateUsersBrush(app.user, {
+					scale : currentBrush.options.scale + 20
+				});
+			}),
+			app.createHotkeyButton('[', 219, 'increase size', function() {
+				var currentBrush = app.user.brush();
+				var brush = app.util.updateUsersBrush(app.user, {
+					blur : currentBrush.options.blur - .1
+				});
+			}),
+			app.createHotkeyButton(']', 221, 'increase size', function() {
+				var currentBrush = app.user.brush();
+				var brush = app.util.updateUsersBrush(app.user, {
+					blur : currentBrush.options.blur + .1
+				});
 			})
 		);
 	}

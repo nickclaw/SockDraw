@@ -21,11 +21,20 @@
 				scale = options.scale || 20,
 				blur = options.blur || 0,
 				color = options.color || [0,0,0,255],
+				opacity = 1,
 				img = new Image();
+
+			// normalize options
+			width = Math.max( Math.min( width, 1 ), 0 );
+			height = Math.max( Math.min( height, 1 ), 0 );
+			scale = Math.max( Math.min( scale, 200 ), 1 );
+			blur = Math.max( Math.min( blur, .99 ), .01 );
+			opacity = Math.max( Math.min( blur, .99 ), .2 );
+
 
 			// create gradient
 			var grad = ctx.createRadialGradient(0,0, scale * blur, 0, 0, scale);
-			grad.addColorStop(0, 'rgba(' + color.slice(0, 3).join(',') + ', 1)');
+			grad.addColorStop(0, 'rgba(' + color.slice(0, 3).join(',') + ', ' + opacity + ')');
 			grad.addColorStop(1, 'rgba(' + color.slice(0, 3).join(',') + ', 0)');
 
 			// draw brush
@@ -45,7 +54,7 @@
 					width : width,
 					height : height,
 					rotate : rotate,
-					size : size,
+					scale : scale,
 					blur : blur,
 					color : color
 				}

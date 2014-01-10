@@ -6,19 +6,19 @@
 		this.SockDraw = app;
 	}
 
-	app.createHotkeyButton = function(key, description, fn) {
+	app.createHotkeyButton = function(letter, code, description, fn) {
 		var element = $('<div>');
 
 		$(document.body)
 			.on('keydown', function(evt) {
-				if ( key === String.fromCharCode(evt.originalEvent.keyCode) ) fn.apply(this, arguments);
+				if ( code === evt.which ) fn.apply(this, arguments);
 			});
 
 		return element
 			.addClass('hotkey')
 			.addClass('tooltip')
 			.addClass('select')
-			.text(key)
+			.text(letter)
 			.attr('data-tip', description)
 			.on('click', fn);
 	}
