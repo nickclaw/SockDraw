@@ -74,7 +74,7 @@
 		});
 
 		app.router.addRoute('newpoint', function(message) {
-			app.users.get(message.from).draw(message.data.point);
+			app.users.get(message.from).drawInstance.draw(message.data.point);
 		});
 
 		app.router.addRoute('newbrush', function(message) {

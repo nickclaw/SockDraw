@@ -7,16 +7,29 @@
 	}
 
 	var	canvas = document.createElement('canvas')
+		brushElement = $('<div>')
 		ctx = canvas.getContext('2d'),
 		drawer = null,
 		history = {};
 
 	app.drawer = {
 		init : function() {
-			$(canvas)
-				.attr('width', window.innerWidth)
-				.attr('height', window.innerHeight)
-				.appendTo('body');
+
+			$(document.body)
+				.append(
+					$(canvas)
+						.attr('width', window.innerWidth)
+						.attr('height', window.innerHeight),
+					brushElement
+						.attr('id', 'brush')
+						.css('top', '-1000px')
+						.css('left', '-1000px')
+				)
+				.on('mousemove', function(evt) {
+					brushElement
+						.css('top', evt.clientY)
+						.css('left', evt.clientX)
+				});
 
 		},
 
@@ -57,6 +70,17 @@
 						.on('mouseup', function(evt) {
 							isDrawing = false;
 						});
+				}
+			}
+
+			return {
+				draw : function(point) {
+					drawer.drawPoint(point, history[id]);
+				},
+
+				updateBrush : function(brush) {
+					brushElement
+						.css("background-image", 'url(' + brush.image.src + ')');
 				}
 			}
 

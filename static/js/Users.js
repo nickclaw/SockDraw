@@ -10,7 +10,7 @@
 
 	app.users = {
 		create : function(id, isLocal) {
-			var brush = app.brushes.presets.default;
+			var brush = null;
 
 			users[id] = {
 				getId : function() {
@@ -19,6 +19,11 @@
 				brush : function(newBrush) {
 					if (newBrush !== undefined) {
 						brush = newBrush;
+
+						if (this.isLocal()) {
+							this.drawInstance.updateBrush(brush);
+						}
+
 					} else {
 						return brush;
 					}
@@ -28,11 +33,13 @@
 				}
 			}
 
-			users[id].draw = app.drawer.getInstance(users[id], function(point) {
+			users[id].drawInstance = app.drawer.getInstance(users[id], function(point) {
 				app.util.sendMessage('newpoint', {
 					point : point
 				});
 			});
+
+			users[id].brush(app.brushes.presets.default);
 
 			return users[id];
 		},
