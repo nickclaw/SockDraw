@@ -11,17 +11,6 @@ app.use('/', express.static(__dirname + '/static'));
 var comm = io.sockets.on('connection', function(socket) {
 	console.log('user ' + socket.id + ' connected...');
 
-	// send initial data
-	socket.emit('updatestate', {
-		you : socket.id,
-		room : 'global',
-		peers : getPeerIds(socket)
-	});
-
-	socket.broadcast.emit('newuser', {
-		id : socket.id
-	})
-
 	// forward messages
 	socket.on('message', function(data) {
 		console.log(data);
@@ -35,9 +24,3 @@ var comm = io.sockets.on('connection', function(socket) {
 
 server.listen(PORT);
 console.log('listening on port ' + PORT);
-
-function getPeerIds(socket) {
-	return Object.keys.call(null, comm.manager.roomClients).filter(function(id) {
-		return id !== socket.id;
-	});
-}

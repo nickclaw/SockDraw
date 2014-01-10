@@ -4,12 +4,20 @@
 		<link href="/css/style.css" rel="stylesheet" type="text/css" />
 		<script src="/js/external/jquery.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="/js/CanvasManager.js"></script>
-		<script src="/js/HotkeyButtonManager.js"></script>
+		<script src="/js/SockDraw.js"></script>
+		<script src="/js/Router.js"></script>
+		<script src="/js/Drawer.js"></script>
+		<script src="/js/HotkeyButton.js"></script>
+		<script src="/js/Components.js"></script> 
+		<script src="/js/Brush.js"></script>
+		<script src="/js/Users.js"></script>
 		<script src="/js/Point.js"></script>
 		<script src="/js/main.js"></script>
 	</head>
 	<body>
+		<div id="modules">
+			<div id="overlay" class="hidden"></div>
+		</div>
 		<div id="ui">
 			<h2 id="title">sockdraw</h2>
 			<div id="hotkeys"></div>

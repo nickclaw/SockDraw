@@ -1,0 +1,15 @@
+@import "modules.scss";
+@import "ui.scss";
+
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}

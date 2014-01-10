@@ -1,8 +1,3 @@
-var SockDraw = {};
-
-img = new Image();
-img.src = 'http://www.tricedesigns.com/wp-content/uploads/2012/01/brush2.png';
-
 SockDraw.createCanvas = function(ondraw) {
 	var canvas = document.createElement('canvas'),
 		ctx = canvas.getContext('2d')
@@ -16,7 +11,7 @@ SockDraw.createCanvas = function(ondraw) {
 				var id = id,
 					points = [],
 					lastPoint = null,
-					brush = null;
+					brush = SockDraw.brush.presets.default;
 
 				var exports = {
 					getId : function() {
@@ -51,11 +46,10 @@ SockDraw.createCanvas = function(ondraw) {
 							angle = Point.angle(point1, point2);
 
 						for (var i = 0; i < dist; i+=1) {
-
 							ctx.drawImage(
-									img,
-									point1.x + (Math.sin(angle) * i) - 25,
-									point1.y + (Math.cos(angle) * i) - 25
+									brush.image,
+									point1.x + (Math.sin(angle) * i) - 25 - brush.image.width / 2 + 25,
+									point1.y + (Math.cos(angle) * i) - 25 - brush.image.height / 2 + 25
 								);
 						}
 					}
