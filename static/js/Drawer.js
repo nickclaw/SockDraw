@@ -15,12 +15,13 @@
 	app.drawer = {
 		init : function() {
 
-			$(document.body)
+			$('#canvas')
 				.append(
 					$(canvas)
 						.attr('width', window.innerWidth)
 						.attr('height', window.innerHeight),
 					brushElement
+						.addClass('noselect')
 						.attr('id', 'brush')
 						.css('top', '-1000px')
 						.css('left', '-1000px')

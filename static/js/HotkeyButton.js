@@ -16,8 +16,10 @@
 
 		return element
 			.addClass('hotkey')
+			.addClass('tooltip')
+			.addClass('select')
 			.text(key)
-			.attr('data-description', description)
+			.attr('data-tip', description)
 			.on('click', fn);
 	}
 
