@@ -27,7 +27,7 @@
 				$('#modules').append(element);
 
 			}
-			image.src = '../image/color_grid_400.jpg';
+			image.src = '../image/color_grid_400.png';
 
 		}
 	}

@@ -90,7 +90,7 @@
 		app.drawer.init();
 
 		$('#hotkeys').append(
-			app.createHotkeyButton('H', 72, 'hide ui', function() {
+			app.createHotkeyButton('h', 72, 'hide ui', function() {
 				console.log('hiding ui');
 				$('#ui').toggle();
 			}),
@@ -113,13 +113,13 @@
 					scale : currentBrush.options.scale + 10
 				});
 			}),
-			app.createHotkeyButton('[', 219, 'increase size', function() {
+			app.createHotkeyButton('[', 219, 'decrease blur', function() {
 				var currentBrush = app.user.brush();
 				var brush = app.util.updateUsersBrush(app.user, {
 					blur : currentBrush.options.blur - .1
 				});
 			}),
-			app.createHotkeyButton(']', 221, 'increase size', function() {
+			app.createHotkeyButton(']', 221, 'increase blur', function() {
 				var currentBrush = app.user.brush();
 				var brush = app.util.updateUsersBrush(app.user, {
 					blur : currentBrush.options.blur + .1

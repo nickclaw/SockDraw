@@ -1,6 +1,6 @@
 (function() {
 	var app = this.SockDraw = this.SockDraw || {};
-	
+
 	var	canvas = document.createElement('canvas')
 		brushElement = $('<div>')
 		ctx = canvas.getContext('2d'),
@@ -76,7 +76,7 @@
 
 				updateBrush : function(brush) {
 					brushElement
-						.css("background-image", 'url(' + brush.image.src + ')');
+						.css("background-image", 'url(' + brush.preview + ')');
 				}
 			}
 

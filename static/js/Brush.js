@@ -17,7 +17,8 @@
 				blur = options.blur || .5,
 				color = options.color || [0,0,0,255],
 				opacity = 1,
-				img = new Image();
+				img = new Image()
+				previewUrl = '';
 
 			// normalize options
 			width = Math.max( Math.min( width, 1 ), 0 );
@@ -39,12 +40,20 @@
 				ctx.fillStyle = grad;
 				ctx.fillRect(-size/2,-size/2,size,size);
 				img.src = canvas.toDataURL();
+
+				// draw the image a few more times
+				// this better shows what the brush stroke will look like
+				for (var i = 0; i < scale / 2; i++) {
+					ctx.fillRect(-size/2,-size/2,size,size);
+				}
+				previewUrl = canvas.toDataURL();
 			ctx.restore();
 			ctx.clearRect(-size/2,-size/2,size,size);
 
 			// return object
 			return {
 				image : img,
+				preview : previewUrl,
 				options : {
 					width : width,
 					height : height,

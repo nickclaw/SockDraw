@@ -1,3 +1,4 @@
 /node_modules/*
 /static/js/external
 *.css
+/.sass_cache
