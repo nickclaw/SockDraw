@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+
+	<script>
+			var canvas = document.getElementById('canvas'),
+			 	ctx = canvas.getContext('2d'),
+			 	size = 400,
+			 	grid = 16,
+			 	gridSize = size / grid;
+
+			canvas.setAttribute('width', size + 'px');
+			canvas.setAttribute('height', size + 'px');
+
+			
+
+			for (var i = 0; i < 16; i++) {
+
+			}	
+
+			console.log(canvas.toDataURL());
+		</script>
+</html>

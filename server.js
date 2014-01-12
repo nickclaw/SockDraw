@@ -6,7 +6,7 @@ var express = require('express'),
 	io = require('socket.io').listen(server);
 
 app.use(express.compress());
-app.use('/', express.static(__dirname + '/static'));
+app.use('/', express.static(__dirname + '/build/static'));
 
 var comm = io.sockets.on('connection', function(socket) {
 	console.log('user ' + socket.id + ' connected...');
