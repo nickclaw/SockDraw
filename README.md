@@ -3,6 +3,8 @@ SockDraw
 
 Collaborative drawing with sockets.
 
+<img title="sockdraw in action" src="http://nickclaw.com/static/image/pages/sockdraw/dual.png" />
+
 1) Cloning this Repository
 -----------------------------------
 
